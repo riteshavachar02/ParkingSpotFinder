@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id ("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
+    id("kotlin-kapt")
 }
 
 android {
@@ -31,19 +31,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -52,7 +57,6 @@ android {
 }
 
 dependencies {
-
     // Core
     implementation(libs.androidx.core.ktx.v1131)
     implementation(libs.androidx.lifecycle.runtime.ktx.v270)
@@ -60,6 +64,7 @@ dependencies {
 
     // Jetpack Compose
     implementation(libs.ui)
+    implementation(platform(libs.compose.bom))
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.ui.tooling.preview)
@@ -71,12 +76,12 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.maps.compose)
 
-    // Hilt Dependency Injection
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Room Database
+    // Room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
